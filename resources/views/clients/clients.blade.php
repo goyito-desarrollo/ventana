@@ -8,7 +8,7 @@
             <div class="panel-heading" style="background-color: gray; color:white;">Catálogo Socios de Negocios</div>
         </div>
 	 <div class="col-xs-12 col-sm-12 col-md-12">
-               <form id="frmsearch" action="clientes" method="POST">
+               <form id="frmsearch" action="/clientes" method="POST">
             <div class="panel panel-primary">
 
               <div class="panel-heading">Filtro 
@@ -80,7 +80,7 @@
                @foreach($Socios as $socio)
                   <tr class="info">
                     <td>
-                        <a href="ventanaWeb/public/clientes/{{ $socio->CodigoSN }}/"><span class="fa fa-arrow-right" style="color:blue">&nbsp</span></a>
+                        <a href="/clientes/{{ $socio->CodigoSN }}/"><span class="fa fa-arrow-right" style="color:blue">&nbsp</span></a>
                         <a href=""><span class="fa fa-check-circle" style="color:#f0ad4e"></span></a> 
                     </td>
                     <td>{{ $socio->CodigoSN }}</td>

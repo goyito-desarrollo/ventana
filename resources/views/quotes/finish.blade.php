@@ -9,7 +9,7 @@
             <div class="panel-heading" style="background-color: gray; color:white;">Nueva Cotización</div>
             <div class="panel-body">
              <!--icono regresar-->
-                  <a href="http://localhost/ventanaWeb/public/cotizaciones">
+                  <a href="/cotizaciones">
                          <i data-toggle="tooltip" data-placement="left" title="Regresar" class="fa fa-reply fa-2x" style="color:black;"></i>
                   </a>&nbsp &nbsp
                <!--icono buscar por codigo-->

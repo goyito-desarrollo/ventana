@@ -9,19 +9,19 @@
             <div class="panel-heading" style="background-color: gray; color:white;">Nueva Cotizacion</div>
             <div class="panel-body">
              <!--icono regresar-->
-                  <a href="http://localhost/ventanaWeb/public/cotizaciones">
+                  <a href="/cotizaciones">
                          <i data-toggle="tooltip" data-placement="left" title="Regresar" class="fa fa-reply fa-2x" style="color:black;"></i>
                   </a>&nbsp &nbsp
                 <!--  icono continuar -->
-                  <a href="http://localhost/ventanaWeb/public/cotizacionP/{{$cotizacion->PKCotizacion}}">
+                  <a href="/cotizacionP/{{$cotizacion->PKCotizacion}}">
                 <i data-toggle="tooltip" data-placement="left" title="Continuar" class="fa fa-check-circle-o fa-2x" style="color:#2ECC71;"aria-hidden="true"></i>
                   </a>&nbsp &nbsp
                <!--icono buscar por codigo-->
-                   <a href="http://localhost/ventanaWeb/public/cotizaciones">
+                   <a href="/cotizaciones">
                 <i data-toggle="tooltip" data-placement="left" title="Buscar por Codigo o Descripcion" class="fa fa-barcode fa-2x" style="color:black;"aria-hidden="true"></i>
                   </a>&nbsp &nbsp
                     <!--icono buscar por multiplespalabras-->
-                   <a href="http://localhost/ventanaWeb/public/cotizaciones">
+                   <a href="/cotizaciones">
                 <i data-toggle="tooltip" data-placement="left" title="Buscar por Multiples palabras" class="fa fa-keyboard-o fa-2x" style="color:black;"aria-hidden="true"></i>
                   </a>&nbsp &nbsp
                     <!--icono cambiar usuario-->
@@ -253,7 +253,7 @@ $(function () {
     $(document).keypress(function(e) {
 
          $.ajax({
-            url: "http://localhost/ventanaWeb/public/search/"  + $('#query').val() + e.key,
+            url: "/search/"  + $('#query').val() + e.key,
             type: "get",
             cache: false,
             contentType: false,
@@ -321,14 +321,14 @@ var cot = $('#cot').val();
                      buttons: {
                        Si: function () {
                $.ajax({
-                url: "http://localhost/ventanaWeb/public/eliminarCotizacion/"+cot,
+                url: "/eliminarCotizacion/"+cot,
                 type: "get",
                 cache: false,
                 contentType: false,
                 processData: false
                })
             .done(function (data, textStatus, jqXHR) {
-                    location.href="http://localhost/ventanaWeb/public/cotizaciones";    
+                    location.href="/cotizaciones";    
                                          })
             .fail(function (data, textStatus, jqXHR) {
                                                     // alert(jqXHR);
@@ -368,7 +368,7 @@ var cot = $('#cot').val();
 
                                             $.ajax({
                                                 type: 'POST',
-                                                url: "http://localhost/ventanaWeb/public/cambiarUsuario",
+                                                url: "/cambiarUsuario",
                                                 dataType: "html",
                                                 data: formData,
                                                 cache: false,

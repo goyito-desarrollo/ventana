@@ -11,7 +11,7 @@
     
             <div class="panel panel-primary">
               <div class="panel-heading">Filtro <span class="fa fa-search"></span>
-                <a href="nueva">
+                <a href="/nueva">
                      <button role="button" type="button" class=" pull-right btn btn-success btn-circle">
                          <i class="fa fa-plus-circle pull-center"></i>
                      </button><br><br>
@@ -78,13 +78,13 @@
                   <tr class="info">
                    <td>
                    @if($cotizacion->Estatus == 0)
-                        <a href="cotizacion/{{ $cotizacion->PKCotizacion }}"><span class="fa fa-pencil" style="color:#000"></span></a> 
+                        <a href="/cotizacion/{{ $cotizacion->PKCotizacion }}"><span class="fa fa-pencil" style="color:#000"></span></a> 
                    @endif
                     @if($cotizacion->Estatus == 1)
-                        <a href="cotizacionP/{{ $cotizacion->PKCotizacion }}"><span class="fa fa-pencil" style="color:#000"></span></a> 
+                        <a href="/cotizacionP/{{ $cotizacion->PKCotizacion }}"><span class="fa fa-pencil" style="color:#000"></span></a> 
                    @endif
                     @if($cotizacion->Estatus == 2)
-                        <a href="cotizacionD/{{ $cotizacion->PKCotizacion }}"><span class="fa fa-file-text-o" style="color:#000"></span></a> 
+                        <a href="/cotizacionD/{{ $cotizacion->PKCotizacion }}"><span class="fa fa-file-text-o" style="color:#000"></span></a> 
                    @endif
 
                     </td>

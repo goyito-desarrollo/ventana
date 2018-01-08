@@ -9,11 +9,11 @@
             <div class="panel-heading" style="background-color: gray; color:white;">Nuevo Pedido</div>
             <div class="panel-body">
              <!--icono regresar-->
-                  <a href="http://localhost/ventanaWeb/public/ordersWeb">
+                  <a href="/ordersWeb">
                          <i data-toggle="tooltip" data-placement="left" title="Regresar" class="fa fa-reply fa-2x" style="color:black;"></i>
                   </a>&nbsp &nbsp
                 <!--  icono continuar -->
-                  <a href="http://localhost/ventanaWeb/public/pedidop/{{$cotizacion->PKPedido}}">
+                  <a href="/pedidop/{{$cotizacion->PKPedido}}">
                 <i data-toggle="tooltip" data-placement="left" title="Continuar" class="fa fa-check-circle-o fa-2x" style="color:#2ECC71;"aria-hidden="true"></i>
                   </a>&nbsp &nbsp
                <!--icono buscar por codigo-->
@@ -321,7 +321,7 @@ var cot = $('#cot').val();
                      buttons: {
                        Si: function () {
                $.ajax({
-                url: "http://localhost/ventanaWeb/public/eliminarPedido/"+cot,
+                url: "/eliminarPedido/"+cot,
                 type: "get",
                 cache: false,
                 contentType: false,
@@ -368,7 +368,7 @@ var cot = $('#cot').val();
 
                                             $.ajax({
                                                 type: 'POST',
-                                                url: "http://localhost/ventanaWeb/public/cambiarUsuarioP",
+                                                url: "/cambiarUsuarioP",
                                                 dataType: "html",
                                                 data: formData,
                                                 cache: false,

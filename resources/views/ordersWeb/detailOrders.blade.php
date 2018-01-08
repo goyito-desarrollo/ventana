@@ -9,11 +9,11 @@
             <div class="panel-heading" style="background-color: gray; color:white;">Nuevo Pedido</div>
             <div class="panel-body">
              <!--icono regresar-->
-                  <a href="http://localhost/ventanaWeb/public/cotizaciones">
+                  <a href="/cotizaciones">
                          <i data-toggle="tooltip" data-placement="left" title="Regresar" class="fa fa-reply fa-2x" style="color:black;"></i>
                   </a>&nbsp &nbsp
                 <!--  icono documento -->
-                  <a href="http://localhost/ventanaWeb/public/pedido/{{$cotizacion->PKPedido}}">
+                  <a href="/pedido/{{$cotizacion->PKPedido}}">
                 <i data-toggle="tooltip" data-placement="left" title="Continuar" class="fa fa-file-text-o fa-2x" style="color:#2ECC71;"aria-hidden="true"></i>
                   </a>&nbsp &nbsp
                <!--icono buscar por codigo-->
@@ -361,14 +361,14 @@ $('#conpedido').on('click', function() {
   var id = $('#coti').val();
     
    $.ajax({
-            url: "http://localhost/ventanaWeb/public/convertirPedido/"+id ,
+            url: "/convertirPedido/"+id ,
             type: "get",
             cache: false,
             contentType: false,
             processData: false
         })
            .done(function (data, textStatus, jqXHR) {
-              window.location.href = 'http://localhost/ventanaWeb/public/ordersWeb';
+              window.location.href = '/ordersWeb';
             })
             .fail(function (data, textStatus, jqXHR) {
                console.log(jqXHR);                        
@@ -380,14 +380,14 @@ $('#registrar').on('click', function() {
   var id = $('#coti').val();
     
    $.ajax({
-            url: "http://localhost/ventanaWeb/public/addcotizacion/"+id ,
+            url: "/addcotizacion/"+id ,
             type: "get",
             cache: false,
             contentType: false,
             processData: false
         })
            .done(function (data, textStatus, jqXHR) {
-              window.location.href = 'http://localhost/ventanaWeb/public/cotizaciones';
+              window.location.href = '/cotizaciones';
             })
             .fail(function (data, textStatus, jqXHR) {
                console.log(jqXHR);                        
@@ -402,14 +402,14 @@ $('#insertD').on('click', function() {
   var id = $('#coti').val();
 
    $.ajax({
-            url: "http://localhost/ventanaWeb/public/agregarDetalleP/"+ socio +"/"+prod+"/"+cant+"/"+id ,
+            url: "/agregarDetalleP/"+ socio +"/"+prod+"/"+cant+"/"+id ,
             type: "get",
             cache: false,
             contentType: false,
             processData: false
         })
            .done(function (data, textStatus, jqXHR) {
-              window.location.href = 'http://localhost/ventanaWeb/public/pedidop/'+id;
+              window.location.href = '/pedidop/'+id;
             })
             .fail(function (data, textStatus, jqXHR) {
                console.log(jqXHR);                        
@@ -438,7 +438,7 @@ $('#getproduct').on('click', function() {
       var formData = new FormData(document.getElementById("frmProduct"));
          $.ajax({
              type: 'POST',
-             url: "http://localhost/ventanaWeb/public/cotizacionDetail",
+             url: "/cotizacionDetail",
              dataType: "html",
              data: formData,
              cache: false,
@@ -492,7 +492,7 @@ $(function () {
     $(document).keypress(function(e) {
  console.log($('#product').val() + e.key); 
          $.ajax({
-            url: "http://localhost/ventanaWeb/public/producto/"  + $('#product').val() + e.key,
+            url: "/producto/"  + $('#product').val() + e.key,
             type: "get",
             cache: false,
             contentType: false,
@@ -519,14 +519,14 @@ var cot = $('#coti').val();
                      buttons: {
                        Si: function () {
                $.ajax({
-                url: "http://localhost/ventanaWeb/public/eliminarPedido/"+cot,
+                url: "/eliminarPedido/"+cot,
                 type: "get",
                 cache: false,
                 contentType: false,
                 processData: false
                })
             .done(function (data, textStatus, jqXHR) {
-                    location.href="http://localhost/ventanaWeb/public/ordersWeb";    
+                    location.href="/ordersWeb";    
                                          })
             .fail(function (data, textStatus, jqXHR) {
                                                     // alert(jqXHR);

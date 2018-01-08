@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="http://localhost/ventanaWeb/public/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <link href="/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
     <title>Pulido</title>
 
     <!-- Fonts -->
@@ -13,16 +13,16 @@
  
     <!-- Styles
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="http://localhost/ventanaWeb/public/assets/font-awesome/css/font-awesome.min.css">
-    <link href="http://localhost/ventanaWeb/public/assets/bootstrap/css/bootstrap.min.css" rel='stylesheet' type='text/css'>
-    <link href="http://localhost/ventanaWeb/public/assets/pickadate/lib/compressed/themes/classic.date.css" rel='stylesheet' type='text/css'>
-    <link href='http://localhost/ventanaWeb/public/assets/jquery-confirm-master/css/jquery-confirm.css' rel='stylesheet' />
+    <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+    <link href="/assets/bootstrap/css/bootstrap.min.css" rel='stylesheet' type='text/css'>
+    <link href="/assets/pickadate/lib/compressed/themes/classic.date.css" rel='stylesheet' type='text/css'>
+    <link href='/assets/jquery-confirm-master/css/jquery-confirm.css' rel='stylesheet' />
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="http://localhost/ventanaWeb/public/assets/bootstrap/js/bootstrap.min.js"></script>
-   <!--script src="http://localhost/ventanaWeb/public/assets/pickdate/lib/picker.date.js"></script-->
+    <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+   <!--script src="/assets/pickdate/lib/picker.date.js"></script-->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="http://localhost/ventanaWeb/public/assets/jquery-confirm-master/js/jquery-confirm.js"></script>
+    <script src="/assets/jquery-confirm-master/js/jquery-confirm.js"></script>
 
 
     
@@ -167,28 +167,28 @@ body {
                    <!--  <li><a href="{{ url('inventario') }}"><i class="fa fa-btn fa-th-large "></i>Inventario</a></li> -->
                   
             <li class="dropdown">
-             <a href="http://localhost/ventanaWeb/public/clientes">
+             <a href="/clientes">
                  <i class="fa fa-users"></i> Mis Clientes
             </a>
             </li>
 
               <li class="dropdown">
-             <a href="http://localhost/ventanaWeb/public/cotizaciones">
+             <a href="/cotizaciones">
              <i class="fa fa-file"></i>  Mis Cotizaciones</a>
             </li>
 
               <li class="dropdown">
-             <a href="http://localhost/ventanaWeb/public/ordersWeb">
+             <a href="/ordersWeb">
              <i class="fa fa-file-text"></i>  Mis Pedidos Web</a>
             </li>
 
              <li class="dropdown">
-             <a href="http://localhost/ventanaWeb/public/ordersSap">
+             <a href="/ordersSap">
              <i class="fa fa-file-text"></i>  Pedidos SAP</a>
             </li>
 
              <li class="dropdown">
-             <a href="http://localhost/ventanaWeb/public/bills">
+             <a href="/bills">
              <i class="fa fa-book"></i>  Facturas</a>
             </li>
 
@@ -224,7 +224,7 @@ body {
                 <!-- Branding Image -->
                 @else
                  <a class="brand-logo" href="{{ url('/login') }}">
-                   <img src="http://localhost/ventanaWeb/public/img/logo_header.png"  alt="Logo" style="height:50px;" >
+                   <img src="/../img/logo_header.png"  alt="Logo" style="height:50px;" >
                 </a>
                  @endif
             </div>
@@ -232,7 +232,7 @@ body {
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
 
                <a style="margin-left: 40%;" class="brand-logo" href="{{ url('/login') }}">
-                   <img src="http://localhost/ventanaWeb/public/img/logo_header.png"  alt="Logo" style="height:50px;" >
+                   <img src="/../img/logo_header.png"  alt="Logo" style="height:50px;" >
                 </a>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -260,26 +260,26 @@ body {
                  <i class="pull-right hidden-xs showopacity fa fa-user"></i>Bienvenido / {{ Auth::user()->name }}
             </a>
                 <hr>
-             <a href="http://localhost/ventanaWeb/public/clientes ">
+             <a href="/clientes ">
                  <i class="pull-right hidden-xs showopacity fa fa-users"></i> Mis Clientes
             </a>
       
                   <hr>
-             <a href="http://localhost/ventanaWeb/public/cotizaciones">
+             <a href="/cotizaciones">
              <i class="pull-right hidden-xs showopacity fa fa-file"></i>  Mis Cotizaciones</a>
          
                   <hr>
 
-             <a href="http://localhost/ventanaWeb/public/ordersWeb">
+             <a href="/ordersWeb">
              <i class="pull-right hidden-xs showopacity fa fa-file-text"></i>  Mis Pedidos Web</a>
          
                 <hr>
 
-             <a href="http://localhost/ventanaWeb/public/ordersSap">
+             <a href="/ordersSap">
              <i class="pull-right hidden-xs showopacity fa fa-file-text"></i>  Pedidos SAP</a>
                 <hr>
 
-             <a href="http://localhost/ventanaWeb/public/bills">
+             <a href="/bills">
              <i class="pull-right hidden-xs showopacity fa fa-book"></i>  Facturas</a>
   
                    <hr>
@@ -313,12 +313,7 @@ function closeNav() {
 
 });  */
 </script>
-<script type="text/javascript">
-	$(document).ready(){
-	 document.getElementById("mySidenav").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-});
-</script>
+
     @yield('content')
 
  

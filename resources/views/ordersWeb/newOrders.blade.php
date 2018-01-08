@@ -8,7 +8,7 @@
         <div class="panel panel-default">
             <div class="panel-heading" style="background-color: gray; color:white;">Nuevo Pedido</div>
            <div class="panel-body">
-               <a href="http://localhost/ventanaWeb/public/ordersWeb">
+               <a href="/ordersWeb">
                          <i class="fa fa-reply fa-2x " style="color:black;"></i>
                   </a>&nbsp &nbsp
 <!--                   <a href="">
@@ -65,7 +65,7 @@
                           <div class="form-group ">
                              <label class="col-sm-4 control-label">Codigo SN</label>
                              <div class="col-sm-8 ">
-                              <form id="frmClient"  class="form-inline" action="http://localhost/ventanaWeb/public/pedidos" method="POST">
+                              <form id="frmClient"  class="form-inline" action="/pedidos" method="POST">
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                  <div class="input-group" >
                                 
@@ -238,7 +238,7 @@
     $(document).keypress(function(e) {
 
          $.ajax({
-            url: "http://localhost/ventanaWeb/public/search/"  + $('#query').val() + e.key,
+            url: "/search/"  + $('#query').val() + e.key,
             type: "get",
             cache: false,
             contentType: false,
@@ -265,7 +265,7 @@
                                 buttons: {
                                     Si: function () {
                                         // here the key 'something' will be used as the text.
-                                      location.href="http://localhost/ventanaWeb/public/ordersWeb";    
+                                      location.href="/ordersWeb";    
                                          
                                     },
                                     somethingElse: {

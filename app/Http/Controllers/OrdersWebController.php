@@ -51,7 +51,9 @@ class  OrdersWebController extends Controller
     public function setquote(){
  $id = $_POST['query'];    
  $user = Auth::user();
-  
+ /*$socios = SocioNegocios::select('id')
+                        ->where('IV_VV_SociosNegocios.CodigoSN',$id)
+                        ->join('USERS','USERS.CodigoSN','=','IV_VV_SociosNegocios.CodigoSN') ->first();*/  
  $folioWeb = $this->folio();
 
         $pedido                = new PedidoWeb();
