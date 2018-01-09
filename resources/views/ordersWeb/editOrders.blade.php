@@ -97,21 +97,26 @@
                           <div class="form-group ">
                              <label class="col-sm-4 control-label">Límite de Crédito</label>
                              <div class="col-sm-8">
-                                <p class="control-label" id="lblLimitCredit">{{ $client->LineaCredito }}</p>
+                                <p class="control-label" id="lblLimitCredit">
+                            {{ number_format($client->LineaCredito,2) }}</p>
                              </div>
                           </div>
                           
                           <div class="form-group ">
                              <label class="col-sm-4 control-label">Saldo</label>
                              <div class="col-sm-8">
-                                <p class="control-label" id="lblSaldo">{{ $client->Saldo }}</p>
+                                <p class="control-label" id="lblSaldo">
+                             {{ number_format($client->Saldo,2) }}
+                            </p>
                              </div>
                           </div>
                           
                           <div class="form-group ">
                              <label class="col-sm-4 control-label">Saldo Vencido</label>
                              <div class="col-sm-8">
-                                <p class="control-label" id="lblSaldoVencido">{{ $client->SaldoVencido }}</p>
+                                <p class="control-label" id="lblSaldoVencido">
+                                {{ number_format($client->SaldoVencido,2) }}
+                                </p>
                              </div>
                           </div>
 
@@ -169,8 +174,9 @@
                          <label class="col-sm-4 control-label">Contacto</label>
                          <div class="col-sm-8">
                             <select class="form-control" id="">
-                                    <option value="form1"></option>
-                                    <option value="form2"></option>
+                                      @foreach($contact as $cont)
+                                    <option value="form1"> {{ $cont->IdContacto }}</option>
+                                    @endforeach
                           </select>
                          </div>
                       </div>
@@ -185,7 +191,8 @@
                          <div class="col-sm-8">
                             <select class="form-control" id="">
                                     <option value="form1">01.-Primario</option>
-                                    <option value="form2">02.-secundario</option>
+                                    <option value="form2">02.-C</option>
+                                    <option value="form2">03.-CC</option>
                             </select>
                          </div>
                       </div>
@@ -228,12 +235,19 @@
               <div class="panel-heading header">Dirección <span class="fa fa-file-text"></span></div>
               <div class="panel-body">
                 <div class="form-vertical">
-                        <label class="col-sm-4 control-label">Tipo de Comprobante</label>
-                        <div class="form-group col-sm-8 ">
-                          <select class="form-control" id="">
-                                    <option value="form1">Fiscal</option>
-                                    <option value="form2">Fiscal2</option>
+                  <div class="form-group col-sm-8 ">
+                        <label class="control-label">Dirección Factura</label>
+                      
+                          <select class="form-control" id="pkDireccion">
+                                      @foreach($direccion as $dic)
+                                    <option value="{{ $dic->IdDireccion }}"> 
+                                    {{ $dic->IdDireccion }} - {{ $dic->Calle }} {{ $dic->NumeroExterior }}
+                                    Colonia {{ $dic->Colonia }} C.P. {{ $dic->CP }}
+
+                                    </option>
+                                    @endforeach
                           </select>
+
                         </div>
                 </div>
               </div>

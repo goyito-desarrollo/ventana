@@ -38,12 +38,12 @@ public function newQuotes(){
 //////
 public function getUsers($id){
         
-     $socios = SocioNegocios::select('CodigoSN')->where('CodigoSN','like','%'.$id.'%')->get();
+     $socios = SocioNegocios::select('Nombre','CodigoSN')->where('Nombre','like','%'.$id.'%')->get();
      $client = array();
 
        foreach ($socios as $value) {
            # code...
-        $client[] = $value->CodigoSN;
+        $client[] = $value->CodigoSN." - ".$value->Nombre;
        }
 
         return $client;
@@ -164,13 +164,13 @@ $cantidad += $value->Cantidad;
 //////
 public function getProduct($id){
 
-$articulos = Articulos::select('CodigoArticulo')->where('CodigoArticulo','like','%'.$id.'%')->take(10)->get();
+$articulos = Articulos::select('CodigoArticulo','NombreArticulo')->where('CodigoArticulo','like','%'.$id.'%')->take(10)->get();
 
      $articulo = array();
 
        foreach ($articulos as $value) {
            # code...
-        $articulo[] = $value->CodigoArticulo;
+        $articulo[] = $value->CodigoArticulo." - ".$value->NombreArticulo;
        }
 
         return $articulo;
@@ -182,6 +182,8 @@ public function addProduct(){
   $articuloA = array();
   $socio = $_POST['socio'];
   $product = $_POST['product'];
+
+  $productC =  explode(" ",$product);
     $socioD = SocioNegocios::select('IdListaPrecios'
                                    ,'Moneda'
                                    ,DB::raw('(CASE WHEN AlmacenPred IS NULL THEN 1 ELSE AlmacenPred END) AS Almacen')
@@ -200,7 +202,7 @@ public function addProduct(){
                                         )
                                  ->join('IV_VV_A_Precios','IV_VV_A_Precios.CodigoArticulo','=','IV_VV_ArticulosxAlmacen.CodigoArticulo')
                                  ->where('IdListaPrecios','=',$socioD->IdListaPrecios)
-                                 ->where('IV_VV_ArticulosxAlmacen.CodigoArticulo','=', $product)
+                                 ->where('IV_VV_ArticulosxAlmacen.CodigoArticulo','=', $productC[0])
                                  ->where('CodigoAlmacen','=',$socioD->Almacen)
                                  ->get();
 
@@ -209,7 +211,7 @@ foreach ($articulo as $value) {
            # code...
         $articuloA['CodigoArticulo'] = $value->CodigoArticulo;
         $articuloA['CodigoAlmacen'] = $value->CodigoAlmacen;
-        $articuloA['Stock'] = $value->Stock;
+        $articuloA['Stock'] = number_format($value->Stock,2,".",",");
         $articuloA['NombreAlmacen'] = $value->NombreAlmacen;
         $articuloA['NombreArticulo'] = $value->NombreArticulo;
         $articuloA['Precio'] = number_format($value->Precio,2,".",",")." ".$socioD->Moneda;

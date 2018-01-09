@@ -11,6 +11,8 @@ use App\ArticulosAlmacen;
 use App\DetallePedidoWeb;
 use App\Cotizaciones;
 use App\DetalleCotizacion;
+use App\Contactos;
+use App\Direcciones;
 use DB;
 
 class  OrdersWebController extends Controller
@@ -49,7 +51,9 @@ class  OrdersWebController extends Controller
     }
 //
     public function setquote(){
- $id = $_POST['query'];    
+ $id = $_POST['query'];  
+ //dd($id);  
+ $PKSocio = explode(" ",$id);
  $user = Auth::user();
  /*$socios = SocioNegocios::select('id')
                         ->where('IV_VV_SociosNegocios.CodigoSN',$id)
@@ -61,7 +65,7 @@ class  OrdersWebController extends Controller
         $pedido->FolioSap         = 'borrador'; 
         $pedido->FolioWeb      = $folioWeb; 
         $pedido->FKCliente     = $user->FKuser;
-        $pedido->FKSocionegocios = $id;
+        $pedido->FKSocionegocios = $PKSocio[0];
         $pedido->Fecha         = date("Y-m-d");
         $pedido->Referencia    ='N/A';
         $pedido->Paqueteria    = 'N/A';
@@ -145,9 +149,28 @@ class  OrdersWebController extends Controller
                                 ,'Moneda') 
                        ->where('CodigoSN',$cotizacion->FKSocionegocios)->first(); 
 
+ $contacto = Contactos::select('CodigoSN'
+                              ,'IdContacto')
+                        ->where('CodigoSN',$cotizacion->FKSocionegocios)->get();
+
+ $direccion = Direcciones::select('CodigoSN'
+                                 ,'IdDireccion'
+                                 ,'Calle'
+                                 ,'NumeroExterior'
+                                 ,'Colonia'
+                                 ,'CP'
+                                 ,'Ciudad'
+                                 ,'Pais'
+                                 ,'Estado'
+                                 ,'Impuesto')
+                          ->where('CodigoSN',$cotizacion->FKSocionegocios)->get();
+
          return view('ordersWeb.editOrders')
          ->with('cotizacion',$cotizacion)
-         ->with('client',$client);
+         ->with('client',$client)
+         ->with('contact',$contacto)
+         ->with('direccion',$direccion);
+
        }
 //////
 public function create($id){
@@ -190,6 +213,18 @@ public function create($id){
                                     ->where('FKPedidoWeb','=',$id)
                                     ->get();
 
+      $direccion = Direcciones::select('CodigoSN'
+                                 ,'IdDireccion'
+                                 ,'Calle'
+                                 ,'NumeroExterior'
+                                 ,'Colonia'
+                                 ,'CP'
+                                 ,'Ciudad'
+                                 ,'Pais'
+                                 ,'Estado'
+                                 ,'Impuesto')
+                          ->where('CodigoSN',$cotizacion->FKSocionegocios)->get();
+
         foreach ($detail as $value) {
             # code...
 $arti = Articulos::select('NombreArticulo')->where('CodigoArticulo','=',$value->FKArticulo)->first();
@@ -206,7 +241,8 @@ $cantidad += $value->Cantidad;
          ->with('client',$client)
          ->with('details',$detail)
          ->with('lines',$lines)
-         ->with('cantidad',$cantidad);
+         ->with('cantidad',$cantidad)
+         ->with('direccion',$direccion);
        }
 //////
 ///// 
@@ -214,9 +250,9 @@ private function folio(){
    
   $fecha = date("Ymd");
 
-  $folio = PedidoWeb::select('FolioWeb')->orderBy('FolioWeb','desc')->first();
+  $folio = PedidoWeb::select('PKPedido')->orderBy('PKPedido','desc')->first();
 
-  $folioid = $folio->FolioWeb;
+  $folioid = $folio->PKPedido;
   $folioid++;
   
   return $fecha."-".$folioid;

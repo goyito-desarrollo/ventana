@@ -69,7 +69,7 @@
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                  <div class="input-group" >
                                 
-                                     <input class="form-control"  name="query" id="query" type="text" placeholder="Codigo SN">
+                              <input size="100" class="form-control"  name="query" id="query" type="text" placeholder="Codigo SN">
                                       
                                  </div>
                                  <button type="submit" id ="button" class="btn glyphicon glyphicon-search"></button>
