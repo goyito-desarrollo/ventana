@@ -13,6 +13,7 @@ use App\Cotizaciones;
 use App\DetalleCotizacion;
 use App\Contactos;
 use App\Direcciones;
+use App\UserVentana;
 use DB;
 
 class  OrdersWebController extends Controller
@@ -34,15 +35,32 @@ class  OrdersWebController extends Controller
                                             ,'Referencia'
                                             ,'Total'
                                             ,'FKCliente'
+                                            ,'Paqueteria'
                                             ,'Estatus')
                                       ->get();
+
+          foreach ($Cotizaciones as $value) {
+            # code...
+            $user = UserVentana::where('User','=',$value->FKCliente)->first(); 
+
+            $value->Nombre = $user->Nombre;
+            $value->Apellido = $user->Apellido;
+
+          }
+
+//dd($Cotizaciones);
 
         return view('ordersWeb.ordersWeb')->with('cotizaciones',$Cotizaciones);
     }
 //
     public function newOrders()
     {
-        return view('ordersWeb.newOrders');
+
+      $user = Auth::user();
+
+      $userR = UserVentana::where('User','=',$user->FKuser)->first();
+
+        return view('ordersWeb.newOrders')->with('user',$userR);
     }
 //
     public function seeOrders()
@@ -165,11 +183,14 @@ class  OrdersWebController extends Controller
                                  ,'Impuesto')
                           ->where('CodigoSN',$cotizacion->FKSocionegocios)->get();
 
+ $user = UserVentana::where('User','=',$cotizacion->FKCliente)->first();
+
          return view('ordersWeb.editOrders')
          ->with('cotizacion',$cotizacion)
          ->with('client',$client)
          ->with('contact',$contacto)
-         ->with('direccion',$direccion);
+         ->with('direccion',$direccion)
+         ->with('user',$user);
 
        }
 //////
@@ -234,6 +255,7 @@ $lines += 1;
 $cantidad += $value->Cantidad;
         }
 
+$user = UserVentana::where('User','=',$cotizacion->FKCliente)->first();
 //dd($detail);
 
          return view('ordersWeb.detailOrders')
@@ -242,7 +264,9 @@ $cantidad += $value->Cantidad;
          ->with('details',$detail)
          ->with('lines',$lines)
          ->with('cantidad',$cantidad)
-         ->with('direccion',$direccion);
+         ->with('direccion',$direccion)
+         ->with('user',$user);
+
        }
 //////
 ///// 
@@ -309,13 +333,15 @@ public function InsertProduct($socio,$product,$cant,$idC){
     $detail->Precio = $articulo->Precio;
     $detail->save();
 
-$cotiza = DetallePedidoWeb::select('Cantidad','Precio')->get();
+$cotiza = DetallePedidoWeb::select('Cantidad','Precio')->where('FKPedidoWeb','=',$idC)->get();
+
 $Subtotal = 0;
 
 foreach ($cotiza as $value) {
     # code...
-   $Subtotal += number_format($value->Cantidad * $value->Precio,2,".",",");
+   $Subtotal += $value->Cantidad * $value->Precio;
 }
+
 
 PedidoWeb::where('PKPedido','=',$idC)
             ->update(['Subtotal' =>$Subtotal
@@ -327,20 +353,60 @@ PedidoWeb::where('PKPedido','=',$idC)
 
 public function deleteA($id,$Articulo){
 
+ $Subtotal = 0;
+
   DetallePedidoWeb::where('FKPedidoWeb','=',$id)
                   ->where('PKDetallePedidoWeb','=',$Articulo)->delete();
 
+  $detalles = DetallePedidoWeb::where('FKPedidoWeb','=',$id)->get();
+
+if(empty($detalles))
+{
+  PedidoWeb::where('PKPedido','=',$id)->update(['Total' => 0,'Subtotal' => 0 ]);
+}
+
+else
+{
+     foreach ($detalles as $value) {
+     # code...
+      $Subtotal += $value->Cantidad * $value->Precio;
+     }
+
+PedidoWeb::where('PKPedido','=',$id)->update(['Total' => $Subtotal,'Subtotal' => $Subtotal ]); 
+}
+  
   return redirect('/pedidop/'.$id);
 
 }
 
 public function refreshCantidad(){
 
+$Subtotal = 0;
+
 DetallePedidoWeb::where('PKDetallePedidoWeb','=',$_POST['articulc'])
             ->update(['Cantidad' =>$_POST['cant']]);
 
+$detalles = DetallePedidoWeb::where('FKPedidoWeb','=',$_POST['id'])->get();
+
+
+     foreach ($detalles as $value) {
+     # code...
+      $Subtotal += $value->Cantidad * $value->Precio;
+     }
+
+PedidoWeb::where('PKPedido','=',$_POST['id'])->update(['Total' => $Subtotal,'Subtotal' => $Subtotal ]); 
+
      return redirect('/pedidop/'.$_POST['id']);         
  
+}
+
+public function register($id,$coment,$comentInt,$direc){
+
+PedidoWeb::where('PKPedido','=',$id)
+          ->update(['Comentario' => $coment,'ComentarioInterno' => $comentInt]);
+
+  exit;
+
 }
 
 }

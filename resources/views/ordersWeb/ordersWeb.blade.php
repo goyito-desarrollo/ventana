@@ -117,6 +117,9 @@
                     <th>Folio Portal</th>
                     <th>Folio SAP</th>
                     <th>Cliente</th>
+                    <th>Referencia</th>
+                    <th>Total</th>
+                    <th>Paqueteria</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -137,7 +140,10 @@
                     <td>{{$cotizacion->Sucursal}}</td>
                     <td>{{$cotizacion->FolioWeb}}</td>
                     <td>{{$cotizacion->FolioSap}}</td>
-                    <td>{{$cotizacion->FKCliente}}</td>
+                    <td>{{$cotizacion->Nombre}} {{$cotizacion->Apellido}}</td>
+                    <td>{{$cotizacion->Referencia}}</td>
+                    <td>{{number_format($cotizacion->Total,2)}}</td>
+                    <td>{{$cotizacion->Paqueteria}}</td>
                   </tr>
                 @endforeach
                 </tbody>

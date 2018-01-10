@@ -94,9 +94,9 @@ body {
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 10px;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     color: #818181;
     display: block;
     transition: 0.3s;

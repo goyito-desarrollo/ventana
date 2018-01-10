@@ -53,6 +53,7 @@ Route::Post('cambiarUsuarioP/','OrdersWebController@changeUser');
 Route::get('agregarDetalleP/{so}/{prd}/{cant}/{id}','OrdersWebController@InsertProduct');
 Route::get('eliminarArticulo/{id}/{articulo}','OrdersWebController@deleteA');
 Route::post('cambiarcantidad','OrdersWebController@refreshCantidad');
+Route::get('addPedido/{id}/{coment}/{comentInt}/{direcc}','OrdersWebController@register');
 
 Route::get('ordersSap', 'OrdersSapController@ordersSap');
 Route::get('bills', 'BillsController@bills');

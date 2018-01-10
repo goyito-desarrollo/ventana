@@ -73,7 +73,7 @@
                           <div class="form-group ">
                              <label class="col-sm-4 control-label">Usuario</label>
                              <div class="col-sm-8">
-                                <p>CBARROSO</p>
+                                 <p>{{$user->Nombre}} {{ $user->Apellido }}</p>
                              </div>
                           </div>
 

@@ -9,12 +9,12 @@
             <div class="panel-heading" style="background-color: gray; color:white;">Nuevo Pedido</div>
             <div class="panel-body">
              <!--icono regresar-->
-                  <a href="/cotizaciones">
+                  <a href="/ordersWeb">
                          <i data-toggle="tooltip" data-placement="left" title="Regresar" class="fa fa-reply fa-2x" style="color:black;"></i>
                   </a>&nbsp &nbsp
                 <!--  icono documento -->
                   <a href="/pedido/{{$cotizacion->PKPedido}}">
-                <i data-toggle="tooltip" data-placement="left" title="Continuar" class="fa fa-file-text-o fa-2x" style="color:#2ECC71;"aria-hidden="true"></i>
+                <i data-toggle="tooltip" data-placement="left" title="Inicio Documento" class="fa fa-file-text-o fa-2x" style="color:#2ECC71;"aria-hidden="true"></i>
                   </a>&nbsp &nbsp
                <!--icono buscar por codigo-->
                    <a href="#">
@@ -47,7 +47,6 @@
                             <div class="col-sm-8">
                                 <select class="form-control" id="formselector">
                                     <option value="form1">Pulido</option>
-                                    <option value="form2">Pulido2</option>
                                 </select>
                             </div>
                       </div>
@@ -70,7 +69,7 @@
                           <div class="form-group ">
                              <label class="col-sm-4 control-label">Usuario</label>
                              <div class="col-sm-8">
-                                <p>CBARROSO</p>
+                                <p>{{$user->Nombre}} {{ $user->Apellido }}</p>
                              </div>
                           </div>
 
@@ -125,7 +124,7 @@
           </div>
   <div class="col-xs-12 col-sm-12 col-md-12">
 
-      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="pro">
+  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="pro">
   <div class="modal-dialog modal-lg" role="document">
    <div class="modal-content"> 
    <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> <h4 class="modal-title" id="myLargeModalLabel">Agregar</h4> </div>
@@ -135,7 +134,7 @@
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
        <input type="hidden" name="socio" id="socio" value="{{$client->CodigoSN}}">
         <input type="hidden" name="coti" id="coti" value="{{$cotizacion->PKPedido}}">
-   <input type="text" id="product" name="product" class="form-control" placeholder="Agregar Productos">
+   <input type="text" id="product" name="product" class="form-control" placeholder="Agregar Productos" autofocus>
       <span class="input-group-btn">
         <button class="btn btn-default" id="getproduct" type="button">Buscar</button>
       </span>
@@ -282,15 +281,15 @@
   <div class="col-xs-12 col-sm-12 col-md-3 pull-right">
 <table style="margin-top: 5px;" class="table table-condensed">
        <tr>
-        <td><strong>Subtotal : </strong>{{$cotizacion->Subtotal}} {{ $client->Moneda}}</td>
+<td style="text-align: right;"><strong>Subtotal : </strong>{{number_format($cotizacion->Subtotal,2)}} {{ $client->Moneda}}</td>
         <td id="txtSubtotal"></td> 
        </tr>
         <tr>
-        <td><strong>Iva : </strong> {{ $cotizacion->Subtotal * .16 }} {{ $client->Moneda}} </td>
+<td style="text-align: right;"><strong>Iva : </strong> {{ $cotizacion->Subtotal * .16 }} {{ $client->Moneda}} </td>
         <td id="txtIva"></td> 
        </tr>
        <tr>
-      <td><strong>Total: </strong> {{$cotizacion->Total}} {{ $client->Moneda}}</td>
+<td style="text-align: right;"><strong>Total: </strong> {{number_format($cotizacion->Total,2)}} {{ $client->Moneda}}</td>
       <td id="txtTotal"></td> 
        </tr>
       </table>
@@ -326,7 +325,7 @@
               <div class="panel-body">
                 <div class="form-vertical">
                         <div class="form-group ">
-                          <textarea class="form-control col-sm-12" style="max-width: 100%; " rows="2" id="comment"></textarea>
+                          <textarea class="form-control col-sm-12" style="max-width: 100%; " rows="2" id="commentInt"></textarea>
                         </div>
                 </div>
               </div>
@@ -364,6 +363,10 @@
   </div>
 <script type="text/javascript">
 
+$('#pro').on('shown.bs.modal', function () {
+    $('#product').focus();
+})
+
 $('#conpedido').on('click', function() {
 
   var id = $('#coti').val();
@@ -386,16 +389,29 @@ $('#conpedido').on('click', function() {
 $('#registrar').on('click', function() {
 
   var id = $('#coti').val();
+  var coment = $('#comment').val();
+
+  if($('#commentInt').val() != '')
+  var comentInt = $('#commentInt').val();
+  else
+  var comentInt = 'null';
+
+  var direc = $('#pkDireccion').val();
+  
+  console.log(id);
+  console.log(coment);
+  console.log(comentInt);
+  console.log(direc);
     
    $.ajax({
-            url: "/addcotizacion/"+id ,
+            url: "/addPedido/"+id+"/"+coment+"/"+comentInt+"/"+direc,
             type: "get",
             cache: false,
             contentType: false,
             processData: false
         })
            .done(function (data, textStatus, jqXHR) {
-              window.location.href = '/cotizaciones';
+              window.location.href = '/ordersWeb';
             })
             .fail(function (data, textStatus, jqXHR) {
                console.log(jqXHR);                        
