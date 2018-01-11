@@ -98,6 +98,7 @@
                 @endforeach
                 </tbody>
              </table>
+             {{ $cotizaciones->links() }}
             </div>
            </div>
         

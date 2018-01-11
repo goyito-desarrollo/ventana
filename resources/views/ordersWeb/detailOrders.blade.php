@@ -28,7 +28,7 @@
                     
                    <!--icono cancelar-->
                   <a href="#" id="cancel">
-                         <i data-toggle="tooltip" data-placement="left" title="Eliminar Cotizacion" class="fa fa-ban fa-2x"  style="color:red;"></i>
+                         <i data-toggle="tooltip" data-placement="left" title="Eliminar Pedido" class="fa fa-ban fa-2x"  style="color:red;"></i>
                  </a><br class="visible-xs"><br class="visible-xs">
         </div>
         </div>
@@ -438,6 +438,7 @@ direc = direc.replace("/", "|");
 $('#insertD').on('click', function() {
   var socio = $('#socio').val();
   var prod = $('#code').text();
+  var Existencia = $('#txtExistencia').text();
   var cant = $('#cant').val();
   var id = $('#coti').val();
 
@@ -450,6 +451,7 @@ $('#insertD').on('click', function() {
         })
            .done(function (data, textStatus, jqXHR) {
               window.location.href = '/pedidop/'+id;
+              $('#pro').show();
             })
             .fail(function (data, textStatus, jqXHR) {
                console.log(jqXHR);                        

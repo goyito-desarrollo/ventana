@@ -27,7 +27,7 @@ public function quotes(){
                                             ,'Total'
                                             ,'FKCliente'
                                             ,'Estatus')
-                                      ->get();
+                                      ->paginate(10);
 
         return view('quotes.quotes')->with('cotizaciones',$Cotizaciones);
     }

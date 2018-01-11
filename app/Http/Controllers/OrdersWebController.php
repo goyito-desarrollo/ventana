@@ -37,7 +37,7 @@ class  OrdersWebController extends Controller
                                             ,'FKCliente'
                                             ,'Paqueteria'
                                             ,'Estatus')
-                                      ->get();
+                                      ->paginate(10);
 
           foreach ($Cotizaciones as $value) {
             # code...
