@@ -79,14 +79,11 @@ class  OrdersWebController extends Controller
  $folioWeb = $this->folio();
 
         $pedido                = new PedidoWeb();
-        $pedido->Sucursal      = 'N/A';
         $pedido->FolioSap         = 'borrador'; 
         $pedido->FolioWeb      = $folioWeb; 
         $pedido->FKCliente     = $user->FKuser;
         $pedido->FKSocionegocios = $PKSocio[0];
         $pedido->Fecha         = date("Y-m-d");
-        $pedido->Referencia    ='N/A';
-        $pedido->Paqueteria    = 'N/A';
         $pedido->Estatus       = 0;
         $pedido->Total         = 0;
         $pedido->Estatus       = 0;
@@ -113,7 +110,6 @@ class  OrdersWebController extends Controller
         $pedido->FKSocionegocios = $Cotizacion->FKSocionegocios;
         $pedido->FKCliente     = $user->FKuser;
         $pedido->Referencia    = $Cotizacion->Referencia;
-        $pedido->Paqueteria    = 'N/A';
         $pedido->Estatus       = 0;
         $pedido->Total         = $Cotizacion->Total;
         $pedido->Subtotal      = $Cotizacion->Subtotal;
@@ -402,11 +398,102 @@ PedidoWeb::where('PKPedido','=',$_POST['id'])->update(['Total' => $Subtotal,'Sub
 
 public function register($id,$coment,$comentInt,$direc){
 
+if($comentInt != 'null'){
 PedidoWeb::where('PKPedido','=',$id)
-          ->update(['Comentario' => $coment,'ComentarioInterno' => $comentInt]);
+          ->update(['Comentario' => $coment,
+            'ComentarioInterno' => $comentInt,
+            'FKDireccion' => $direc,
+            'Estatus' => 3]);
+        }
+else{
+  PedidoWeb::where('PKPedido','=',$id)
+          ->update(['Comentario' => $coment,
+            'FKDireccion' => $direc,
+            'Estatus' => 3]);
+}
 
   exit;
 
+}
+
+public function finish($id){
+  $lines = 0;
+ $cantidad = 0;
+
+ $cotizacion = PedidoWeb::select('PKPedido'
+                                     ,'Sucursal'
+                                     ,'FolioWeb'
+                                     ,'FolioSap'
+                                     ,'Fecha'
+                                     ,'FKSocionegocios'
+                                     ,'FKCliente'
+                                     ,'Referencia'
+                                     ,'Total'
+                                     ,'Subtotal'
+                                     ,'PedidoWeb.Vendedor'
+                                     ,'Comentario'
+                                     ,'ComentarioInterno'
+                                     ,'FKDireccion'
+                                     ,'DocEntry')
+                        ->where('PKPedido',$id)->first(); 
+
+
+         $client = SocioNegocios::select('CodigoSN'
+                                ,'Nombre'
+                                ,'LineaCredito'
+                                ,'Saldo'
+                                ,'SaldoVencido'
+                                ,'Vendedor'
+                                ,'CondicionesPago'
+                                ,'Moneda') 
+                       ->where('CodigoSN',$cotizacion->FKSocionegocios)->first(); 
+
+        $detail = DetallePedidoWeb::select('FKArticulo'
+                                           ,'Cantidad'
+                                           ,'Precio'
+                                           ,'Almacen')
+                                    ->where('FKPedidoWeb','=',$id)
+                                    ->get();
+
+$user = UserVentana::where('User','=',$cotizacion->FKCliente)->first();
+
+$direct = str_replace('|','/',$cotizacion->FKDireccion);
+$direccionD = (explode("-",$direct));
+
+   $direccion = Direcciones::select('CodigoSN'
+                                 ,'IdDireccion'
+                                 ,'Calle'
+                                 ,'NumeroExterior'
+                                 ,'Colonia'
+                                 ,'CP'
+                                 ,'Ciudad'
+                                 ,'Pais'
+                                 ,'Estado'
+                                 ,'Impuesto')
+                          ->where('CodigoSN',$cotizacion->FKSocionegocios)
+                          ->where('IdDireccion',$direccionD[0])
+                          ->where('Calle',$direccionD[1])
+                          ->first();
+
+        foreach ($detail as $value) {
+            # code...
+$arti = Articulos::select('NombreArticulo')->where('CodigoArticulo','=',$value->FKArticulo)->first();
+$value->Name = $arti->NombreArticulo;
+
+$lines += 1;
+$cantidad += $value->Cantidad;
+        }
+
+//dd($detail);
+
+         return view('ordersWeb.finishOrder')
+         ->with('cotizacion',$cotizacion)
+         ->with('client',$client)
+         ->with('details',$detail)
+         ->with('lines',$lines)
+         ->with('cantidad',$cantidad)
+         ->with('direccion',$direccion)
+         ->with('user',$user);
 }
 
 }

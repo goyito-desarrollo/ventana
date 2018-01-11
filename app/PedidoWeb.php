@@ -30,6 +30,7 @@ class PedidoWeb extends Model
       ,'EstatusSAP'
       ,'ErrorSAP'
       ,'VecesEjec'
+      ,'DocEntry'
       ,'FechaProcSAP'];
 
 }

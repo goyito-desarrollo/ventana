@@ -50,7 +50,6 @@
                             <div class="col-sm-8">
                                 <select class="form-control" id="formselector">
                                     <option value="form1">Pulido</option>
-                                    <option value="form2">Pulido2</option>
                                 </select>
                             </div>
                       </div>

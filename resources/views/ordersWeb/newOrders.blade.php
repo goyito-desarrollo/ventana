@@ -212,17 +212,19 @@
            </div>
 
 
+     
       <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="panel panel-primary">
               <div class="panel-heading header">Dirección <span class="fa fa-file-text"></span></div>
               <div class="panel-body">
                 <div class="form-vertical">
-                        <label class="col-sm-4 control-label">Tipo de Comprobante</label>
-                        <div class="form-group col-sm-8 ">
-                          <select class="form-control" id="">
-                                    <option value="form1">Fiscal</option>
-                                    <option value="form2">Fiscal2</option>
+                  <div class="form-group col-sm-8 ">
+                        <label class="control-label">Dirección Factura</label>
+                      
+                          <select class="form-control" id="pkDireccion">
+                                   
                           </select>
+
                         </div>
                 </div>
               </div>

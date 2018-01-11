@@ -48,6 +48,7 @@ Route::get('seeOrders', 'OrdersWebController@seeOrders');
 Route::post('pedidos', 'OrdersWebController@setquote');
 Route::get('pedido/{id}', 'OrdersWebController@getquote');
 Route::get('pedidop/{id}', 'OrdersWebController@create');
+Route::get('pedidoD/{id}', 'OrdersWebController@finish');
 Route::get('eliminarPedido/{id}','OrdersWebController@delete');
 Route::Post('cambiarUsuarioP/','OrdersWebController@changeUser');
 Route::get('agregarDetalleP/{so}/{prd}/{cant}/{id}','OrdersWebController@InsertProduct');

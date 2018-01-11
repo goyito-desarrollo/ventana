@@ -172,7 +172,8 @@
        </tr>
         <tr>
         <td><strong>Existencia :</strong></td>
-        <td id="txtExistencia"></td> 
+          
+        <td id="txtExistencia"> <div id="theDiv"></div> </td> 
        </tr>
 
        <tr>
@@ -248,7 +249,20 @@
                          {{ $detail->Name }}
                        </td>
                        <td>
-                         {{ $detail->Almacen }}
+                         {{ number_format($detail->Almacen,2)  }}
+                       @if($detail->Almacen == 0)
+                         <img id="theImg" src="/img/traffic_red.png" />
+                       
+                       @endif
+                       @if($detail->Almacen > 0 && $detail->Almacen < 10)
+                        <img id="theImg" src="/img/traffic_yellow.png" />
+                       
+                       @endif
+                      @if($detail->Almacen > 10)
+                        <img id="theImg" src="/img/traffic_green.png" />
+                       
+                       @endif
+                  
                        </td>
                          <td  width="120px">
                             <form method="POST" action="/cambiarcantidad">
@@ -285,11 +299,11 @@
         <td id="txtSubtotal"></td> 
        </tr>
         <tr>
-<td style="text-align: right;"><strong>Iva : </strong> {{ $cotizacion->Subtotal * .16 }} {{ $client->Moneda}} </td>
+<td style="text-align: right;"><strong>Iva : </strong> {{ number_format($cotizacion->Subtotal * .16,2) }} {{ $client->Moneda}} </td>
         <td id="txtIva"></td> 
        </tr>
        <tr>
-<td style="text-align: right;"><strong>Total: </strong> {{number_format($cotizacion->Total,2)}} {{ $client->Moneda}}</td>
+<td style="text-align: right;"><strong>Total: </strong> {{number_format($cotizacion->Total,2) + number_format($cotizacion->Subtotal * .16,2) }} {{ $client->Moneda}}</td>
       <td id="txtTotal"></td> 
        </tr>
       </table>
@@ -311,7 +325,8 @@
               <div class="panel-body">
                 <div class="form-vertical">
                         <div class="form-group ">
-                          <textarea class="form-control col-sm-12" style="max-width: 100%; " rows="2" id="comment"></textarea>
+                          <textarea class="form-control col-sm-12" style="max-width: 100%; " rows="2" id="comment">{{ $cotizacion->Comentario }}
+                          </textarea>
                         </div>
                 </div>
               </div>
@@ -343,7 +358,7 @@
                       
                           <select class="form-control" id="pkDireccion">
                                       @foreach($direccion as $dic)
-                                    <option value="{{ $dic->IdDireccion }}"> 
+                                    <option value="{{ $dic->IdDireccion }}-{{ $dic->Calle }}"> 
                                     {{ $dic->IdDireccion }} - {{ $dic->Calle }} {{ $dic->NumeroExterior }}
                                     Colonia {{ $dic->Colonia }} C.P. {{ $dic->CP }}
 
@@ -402,6 +417,7 @@ $('#registrar').on('click', function() {
   console.log(coment);
   console.log(comentInt);
   console.log(direc);
+direc = direc.replace("/", "|");
     
    $.ajax({
             url: "/addPedido/"+id+"/"+coment+"/"+comentInt+"/"+direc,
@@ -491,17 +507,33 @@ $('#getproduct').on('click', function() {
                            break;
                        case 'Stock':
                          $('#txtExistencia').text(item);
+                         if(item == 0){
+                         $('#txtExistencia').prepend('<img id="theImg" src="/img/traffic_red.png" />&nbsp;&nbsp;');
+                          }
+                           if(item > 0 && item < 10){
+                         $('#txtExistencia').prepend('<img id="theImg" src="/img/traffic_yellow.png" />&nbsp;&nbsp;');
+                          }
+                           if(item > 10){
+                         $('#txtExistencia').prepend('<img id="theImg" src="/img/traffic_green.png" />&nbsp;&nbsp;');
+                          }
                            break;
                         case 'Precio':
                          $('#txtPrecio').text(item);
                          $('#txtSubtotal').text(item);
-                         $('#txtIva').text('0.00');
-                         $('#txtTotal').text(item);
+                         console.log(item);
+                         var precio = item.split(" ");
+                         var sub = parseFloat(precio[0]);
+                         var iva =  (sub * .16);
+                         var ivaD = iva.toFixed(2);
+                         var total = sub + iva;
+                         var totalD = total.toFixed(2);
+                         $('#txtIva').text(ivaD+" "+precio[1]);
+                         $('#txtTotal').text(totalD+" "+precio[1]);
                            break;
                    
                    }
                     $('#cant').val(1);
-
+                    
                   });                                                     
              })
             .fail(function (data, textStatus, jqXHR) {

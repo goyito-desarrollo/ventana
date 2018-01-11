@@ -83,7 +83,7 @@
                     @if($cotizacion->Estatus == 1)
                         <a href="/cotizacionP/{{ $cotizacion->PKCotizacion }}"><span class="fa fa-pencil" style="color:#000"></span></a> 
                    @endif
-                    @if($cotizacion->Estatus == 2)
+                    @if($cotizacion->Estatus == 3)
                         <a href="/cotizacionD/{{ $cotizacion->PKCotizacion }}"><span class="fa fa-file-text-o" style="color:#000"></span></a> 
                    @endif
 
